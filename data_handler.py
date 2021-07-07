@@ -1,8 +1,15 @@
 import pandas as pd
 from pathlib import Path
+import time
+import numpy as np
 
 class data_handler():
-    def setup_session_df(self):
+    
+    def setup_df(self):
+        
+        start_time = time.time()
+
+
         headers_requests = ['timestamp_requset', 'session_id', 'partner', 'user_id', 'bid', 'win']
         path = Path.cwd() / 'data'
 
@@ -12,7 +19,7 @@ class data_handler():
         headers_impressions =  ['timestamp_impression', 'session_id','duration']
 
         df_impressions = pd.read_csv(path / 'impressions.csv', names = headers_impressions)
-        # print(df_impressions.head(10))
+        
 
         headers_clicks = ['timestamp_clicks', 'session_id','time']
 
@@ -23,40 +30,68 @@ class data_handler():
 
         self.session_df = df.merge(right=df_clicks, how='outer', on='session_id', indicator='all')
 
-        # with open('check1.txt', 'w') as f:
-        #     f.write(str(self.session_df.iloc[100]))
+       
+        print("--- %s seconds ---" % (time.time() - start_time))
+        
+        
+    async def get_user_info(self, user_id):
+        start_time = time.time()
+        user = {}
+        rows_with_user_id = self.session_df.loc[self.session_df['user_id'] == user_id]
+        user['num_of_requests'] = len(rows_with_user_id)
+        
+        rows_with_impression = rows_with_user_id.loc[self.session_df['requests_and_impressions'] == 'both']
+        user['num_of_impression'] = len(rows_with_impression)
 
-        # with open('check3.txt', 'w') as f:
-        #     f.write(str(self.session_df.loc[self.session_df['requests_and_impressions'] == 'right_only']))
-    
-
-    def setup_user_df(self):
-        all_user_ids = self.session_df['user_id'].unique().to_list()
-        self.user_df = pd.DataFrame() 
-
-        for user_id in all_user_ids:
-            user = {}
-            user['user_id'] = user_id
-            rows_with_user_id = self.session_df.loc[self.session_df['user_id'] == user_id]
-            user['num_of_requests'] = len(rows_with_user_id)
-            
-            rows_with_impression = rows_with_user_id.loc[self.session_df['requests_and_impressions'] == 'both']
-            user['num_of_impression'] = len(rows_with_impression)
-
-            rows_with_clicks = rows_with_user_id.loc[self.session_df['all'] == 'both']
-            user['num_of_clicks'] = len(rows_with_clicks)
-            
-            rows_won = rows_with_user_id.loc[self.session_df['win'] == True]
+        rows_with_clicks = rows_with_user_id.loc[self.session_df['all'] == 'both']
+        user['num_of_clicks'] = len(rows_with_clicks)
+        
+        rows_won = rows_with_user_id.loc[self.session_df['win'] == True]
+       
+        if  len(rows_won) == 0:
+            user['avg_price_bid'] = None
+        else:
             user['avg_price_bid'] = rows_won['bid'].sum() / len(rows_won)
 
-            user['median_impression_duration'] = rows_with_impression['duration'].median(skipna=True)
 
-            user['max_time_passed'] = rows_with_clicks['time'].max(skipna=True)
+        user['median_impression_duration'] = rows_with_impression['duration'].median(skipna=True)
 
-            self.user_df.append(user, ignore_index=True)
+        user['max_time_passed'] = rows_with_clicks['time'].max(skipna=True)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        
+        return user
+    
+        
+    async def get_session_info(self, session_id):
+        start_time = time.time()
+        session = {}
+        session_row = self.session_df.loc[self.session_df['session_id'] == session_id].values[0]
+      
+        request_timestamp = session_row[0]
 
+        impression_timestamp = session_row[6]
 
+        click_timestamp = session_row[9]
 
-            
+        # print([click_timestamp, request_timestamp, impression_timestamp])
+        max_timestamp = np.nanmax([click_timestamp, request_timestamp, impression_timestamp])
 
+        session['begin'] = request_timestamp
+
+        session['finish'] = max_timestamp
+
+        session['partner'] = session_row[2]
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return session
+     
+
+if __name__ == '__main__':
+    dh = data_handler()
+    dh.setup_df()
+
+    dh.get_user_info('efb64b4e-3655-4a4a-af2d-4d62945eb6d0')
+
+    dh.get_session_info('8df4f33b-ba8b-4d82-ab42-46d5fc72f8d0')
+
+    
 
