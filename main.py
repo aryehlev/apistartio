@@ -18,9 +18,9 @@ async def root():
 @app.get("/userStats/{user_id}")
 async def root(user_id):
     
-    data = dh.get_user_info(user_id)
-    result = await data
-    return result
+    data = await dh.get_user_info(user_id)
+    
+    return data
 
 @app.get("/sessionId/{session_id}")
 async def root(session_id):
