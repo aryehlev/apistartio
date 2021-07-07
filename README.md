@@ -15,6 +15,9 @@ uvicorn main:app --reload
 
 ## next thing todo:
 1: change to SQL database for processing larger data
+
 2: testing + CI
+
 3: deploying (prob via docker, includes setting up https by getting SSL certificate and setting up dns and uploading to server/servers/AWS/..)
+
 4: setting up more sevices, to get more data(maybe in bulks)/get different data and so on
