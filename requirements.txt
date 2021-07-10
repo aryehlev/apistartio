@@ -9,4 +9,5 @@ PyYAML==5.4.1
 uvicorn==0.14.0
 watchgod==0.7
 websockets==9.1
-
+mysql-connector-python==8.0.25
+mysqlclient==2.0.3
