@@ -1,3 +1,5 @@
+"""module that contains the sql commands
+"""
 from collections import OrderedDict
 
 TABLES = OrderedDict()
@@ -31,7 +33,7 @@ TABLES['clicks'] = '''
     REFERENCES requests(session_id)
     ON DELETE CASCADE)
       '''
-      
+
 load_files_querys = OrderedDict()
 
 load_files_querys['requests'] = '''
