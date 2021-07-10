@@ -1,10 +1,12 @@
-# fastApi-start.io
+# apistartio
 
 ## steps to get up and running:
 
-cd .../fastApi-start.io
+git clone https://github.com/aryehlev/apistartio.git
 
-virtualenv env -p 3.8 (checked with python 3.8 i think works also with >3.7) need to check still
+cd apistartio
+
+virtualenv env -p 3.8 (works with >3.7) 
 
 env\Scripts\activate - windows,  source env/bin/activate - mac/linux
 
@@ -14,10 +16,10 @@ uvicorn main:app --reload
 
 
 ## next thing todo:
-1: testing + linting + documenting + CI workflow
+1:implements caching
 
-2:implements caching
+2: deploying (prob via docker, includes setting up https by getting SSL certificate and setting up dns and uploading to server/servers/AWS/..)
 
-3: deploying (prob via docker, includes setting up https by getting SSL certificate and setting up dns and uploading to server/servers/AWS/..)
+3: setting up more sevices, to get more data(maybe in bulks)/get different data and so on
 
-4: setting up more sevices, to get more data(maybe in bulks)/get different data and so on
+4:more testing(database and so on)
