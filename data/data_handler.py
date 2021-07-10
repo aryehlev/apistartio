@@ -13,7 +13,6 @@ class data_handler():
         self.connect_to_schema(host, user, password)
 
         self.create_tables()
-
         self.load_data_into_tables()
 
         self.set_user_id_index()
@@ -24,6 +23,7 @@ class data_handler():
             self.db = mysql.connector.connect(
                                     host=host,
                                     user=user,
+                                    port=3306,
                                     password=password,
                                     allow_local_infile=True
                                     )
@@ -77,7 +77,7 @@ class data_handler():
 
     def load_data_into_tables(self):
         
-        self.cursor.execute("SET GLOBAL local_infile=1")
+        # self.cursor.execute("SET GLOBAL local_infile=1")
 
         for table_name in load_files_querys:
             query = load_files_querys[table_name]
@@ -186,9 +186,9 @@ class data_handler():
 if __name__ == '__main__':
 
     dh = data_handler()
-    # dh.setup_schema(host="localhost", user="root",password="altheman310895")
+    dh.setup_schema(host="stario.cna1qj9bze8h.us-east-2.rds.amazonaws.com", user="admin",password="lqw120&8%mna")
 
-    dh.connect_to_schema(host="localhost", user="root",password="altheman310895")
+    # dh.connect_to_schema(host="database-2.cna1qj9bze8h.us-east-2.rds.amazonaws.com", user="root",password="lqw120&8%mna")
 
     print(dh.get_user_info('efb64b4e-3655-4a4a-af2d-4d62945eb6d0'))
 

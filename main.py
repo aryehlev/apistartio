@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.on_event("startup")
 def startup_event():
-    dh.setup_schema('localhost', 'root', 'altheman310895')
+    dh.setup_schema(host='stario.cna1qj9bze8h.us-east-2.rds.amazonaws.com', user='admin', password='lqw120&8%mna')
 
 
 @app.on_event("shutdown")
