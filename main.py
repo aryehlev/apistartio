@@ -1,14 +1,18 @@
 from fastapi import FastAPI
 
-from data_handler import data_handler
+from data import data_handler
 
-dh = data_handler()
+dh = data_handler.data_handler()
 app = FastAPI()
 
 @app.on_event("startup")
 def startup_event():
-    dh.setup_df()
-  
+    dh.setup_schema('localhost', 'root', 'altheman310895')
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    dh.close_all()
 
 @app.get("/keepalive")
 async def root():

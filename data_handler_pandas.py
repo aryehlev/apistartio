@@ -19,7 +19,7 @@ class data_handler():
         headers_impressions =  ['timestamp_impression', 'session_id','duration']
 
         df_impressions = pd.read_csv(path / 'impressions.csv', names = headers_impressions)
-        
+        print(len(df_impressions))
 
         headers_clicks = ['timestamp_clicks', 'session_id','time']
 
@@ -38,6 +38,7 @@ class data_handler():
         start_time = time.time()
         user = {}
         rows_with_user_id = self.session_df.loc[self.session_df['user_id'] == user_id]
+        print(rows_with_user_id)
         user['num_of_requests'] = len(rows_with_user_id)
         
         rows_with_impression = rows_with_user_id.loc[self.session_df['requests_and_impressions'] == 'both']
@@ -66,7 +67,7 @@ class data_handler():
         start_time = time.time()
         session = {}
         session_row = self.session_df.loc[self.session_df['session_id'] == session_id].values[0]
-      
+    
         request_timestamp = session_row[0]
 
         impression_timestamp = session_row[6]
@@ -89,9 +90,9 @@ if __name__ == '__main__':
     dh = data_handler()
     dh.setup_df()
 
-    dh.get_user_info('efb64b4e-3655-4a4a-af2d-4d62945eb6d0')
+    print(dh.get_user_info('efb64b4e-3655-4a4a-af2d-4d62945eb6d0'))
 
-    dh.get_session_info('8df4f33b-ba8b-4d82-ab42-46d5fc72f8d0')
+    # print(dh.get_session_info('8df4f33b-ba8b-4d82-ab42-46d5fc72f8d0'))
 
     
 
