@@ -1,7 +1,7 @@
 """main module to run the api- contains endpoints
 """
 from fastapi import FastAPI
-from data import data_handler # pylint: disable=import-error
+from apistartio.data import data_handler
 
 dh = data_handler.DataHandler()
 app = FastAPI()

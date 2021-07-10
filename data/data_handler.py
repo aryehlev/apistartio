@@ -7,7 +7,7 @@ import statistics
 import sys
 import mysql.connector
 from mysql.connector import errorcode
-from data.sql_commands import TABLES, load_files_querys # pylint: disable=import-error
+from apistartio.data.sql_commands import TABLES, load_files_querys
 
 DB_NAME = 'startio'
 
