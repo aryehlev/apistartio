@@ -16,7 +16,7 @@ uvicorn main:app --reload
 
 
 ## next thing todo:
-1:implements caching
+1:implement caching
 
 2: deploying (prob via docker, includes setting up https by getting SSL certificate and setting up dns and uploading to server/servers/AWS/..)
 
