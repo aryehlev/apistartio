@@ -26,6 +26,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        sudo apt-get install mysql-client
         sudo systemctl enable mysql.service
         sudo systemctl start mysql.service
         python -m pip install --upgrade pip
