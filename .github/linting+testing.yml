@@ -1,0 +1,41 @@
+  name: linting and testing
+
+on: 
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+    
+jobs:
+  # Purpose of the process
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Download fastApiStartio repo to the runner
+    - uses: actions/checkout@v2
+    # Set up Python 3.8
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    
+    - name: Install Environment & Dependencies
+      run: |
+        pip3 install virtualenv
+        virtualenv env -p 3.8
+        source env/bin/activate
+        pip3 install -r requierments.txt
+  
+    # - name: Run tests
+    #   run: |
+    #     ls
+    #     source venv/bin/activate  
+    #     cd superx 
+    #     echo 'second ls'  
+    #     ls  
+    #     python -m pytest
+    # - name: Analyse the code with pylint
+    #   run: |
+    #     source venv/bin/activate
+    #     pylint --load-plugins pylint_flask_sqlalchemy superx
