@@ -1,7 +1,7 @@
 """main module to run the api- contains endpoints
 """
 from fastapi import FastAPI
-from apistartio.data import data_handler
+from data import data_handler
 
 dh = data_handler.DataHandler()
 app = FastAPI()
@@ -13,7 +13,7 @@ def startup_event():
     """
     dh.setup_schema(host='stario.cna1qj9bze8h.us-east-2.rds.amazonaws.com',
                     user='admin',
-                    password='lqw120&8%mna')
+                    password='lqw120&8%mna2')
 
 @app.on_event("shutdown")
 def shutdown_event():
