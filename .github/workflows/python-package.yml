@@ -34,7 +34,11 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with pylint
       run: |
-       pylint .
+        pylint .
+        pylint tests/test_main.py
+        cd data
+        pylint .
     - name: Test with pytest
       run: |
-        pytest
+        python -m pytest
+        

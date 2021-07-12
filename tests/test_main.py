@@ -2,7 +2,7 @@
 """
 from fastapi.testclient import TestClient
 
-from apistartio.main import app
+from main import app # pylint: disable=import-error
 
 
 
